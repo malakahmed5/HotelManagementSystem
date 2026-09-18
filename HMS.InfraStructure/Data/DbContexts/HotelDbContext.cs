@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace HMS.Infrastructure.Data.DbContexts
 {
-    public class HMSDbContext:DbContext
+    public class HotelDbContext:DbContext
     {
-        public HMSDbContext(DbContextOptions<HMSDbContext> options) : base(options) { }
+        public HotelDbContext(DbContextOptions<HotelDbContext> options)
+            : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

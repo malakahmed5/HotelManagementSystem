@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace HMS.Infrastructure.Data.Configurations
 {
-    public class RoomConfigurations : IEntityTypeConfiguration<Room>
+    public class RoomConfigurations : BaseConfigurations<int ,Room> , IEntityTypeConfiguration<Room>
     {
-        public void Configure(EntityTypeBuilder<Room> builder)
+        public new void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.Property(r => r.CreatedAt)
-                .HasDefaultValueSql("GETDATE()");
+            base.Configure(builder);
 
             builder.Property(r => r.RoomType)
                 .HasConversion<string>();
@@ -29,7 +28,7 @@ namespace HMS.Infrastructure.Data.Configurations
             builder.Property(r => r.Description)
                 .HasMaxLength(150);
 
-            builder.Property(r => r.Id)
+            builder.Property(r => r.PricePerNight)
                 .HasPrecision(18, 2);
 
             #region Relationships Configurations
