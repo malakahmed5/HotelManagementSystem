@@ -11,4 +11,12 @@
     <ProjectReference Include="..\HMS.Services.Abstraction\HMS.Services.Abstraction.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="14.0.0" />
+	</ItemGroup>
+
 </Project>
