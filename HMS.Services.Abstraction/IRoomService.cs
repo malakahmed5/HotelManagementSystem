@@ -13,7 +13,7 @@ namespace HMS.Services.Abstraction
     public interface IRoomService
     {
         Task<GenericResponse<PaginatedResult<RoomDTO>>> GetAllRoomsForGuestAsync(RoomQueryParams queryParams);
-        Task<GenericResponse<RoomDetailsDTO>> GetRoomDetailsForGuestAsync(int id);
+        Task<GenericResponse<RoomDetailsDTO>> GetRoomDetailsAsync(int id);
 
         Task<GenericResponse<PaginatedResult<RoomForAdminDTO>>> GetAllRoomsForAdminOrStaffAsync(RoomQueryParams queryParams);
         Task<GenericResponse<bool>> CreateRoomAsync(CreateRoomDTO createRoomDto);

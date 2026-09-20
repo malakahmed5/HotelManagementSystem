@@ -69,7 +69,7 @@ namespace HMS.Services.Services
 
         }
 
-        public async Task<GenericResponse<RoomDetailsDTO>> GetRoomDetailsForGuestAsync(int id)
+        public async Task<GenericResponse<RoomDetailsDTO>> GetRoomDetailsAsync(int id)
         {
             //if room exist or not && status = (ava || reserved)
             var genericResponse = new GenericResponse<RoomDetailsDTO>();

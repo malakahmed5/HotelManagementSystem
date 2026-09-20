@@ -1,13 +1,21 @@
 using HMS.API.WebApplicationRegister;
 using HMS.Core.Contracts;
+using HMS.Core.Entiites.AuthModule;
+using HMS.Infrastructure.Data.DataSeed;
 using HMS.Infrastructure.Data.DbContexts;
+using HMS.Infrastructure.ExternalServices;
 using HMS.Infrastructure.UnirOfWork;
 using HMS.Services.Abstraction;
 using HMS.Services.Services;
 using HMS.Services.Services.AutoMapper;
 using HMS.Services.Services.AutoMapper.RoomModule;
 using HMS.Services.Services.Helpers;
+using HMS.Shared.DTOs.MessagesDTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HMS.API
@@ -25,6 +33,26 @@ namespace HMS.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+
+                    ValidIssuer = builder.Configuration["JWTOptions:Issuer"],
+                    ValidAudience = builder.Configuration["JWTOptions:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTOptions:SecretKey"]!))
+                };
+            });
+
 
             builder.Services.AddDbContext<HotelDbContext>(options =>
             {
@@ -36,10 +64,21 @@ namespace HMS.API
             builder.Services.AddScoped<IRoomService, RoomService>();
             builder.Services.AddTransient<IAttachmentService, AttachmentService>();
 
+            builder.Services.AddIdentityCore<HotelUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<HotelDbContext>();
+
+            builder.Services.AddScoped<IDataInitializer, DataInitializer>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            builder.Services.Configure<EmailSettings>(
+                builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.AddScoped<IEmailService, EmailService>();
             #endregion
 
             var app = builder.Build();
             await app.MigrateDatabaseAsync();
+            await app.SeedIdentityDataAsync();
 
             #region Middlewares [Piplines]
 
