@@ -1,4 +1,5 @@
-﻿using HMS.Infrastructure.Data.DbContexts;
+﻿using HMS.Core.Contracts;
+using HMS.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HMS.API.WebApplicationRegister
@@ -13,6 +14,15 @@ namespace HMS.API.WebApplicationRegister
 
             if (pendingMigrations.Any())
                 await dbContext.Database.MigrateAsync();
+
+            return app;
+        }
+
+        public static async Task<WebApplication> SeedIdentityDataAsync(this WebApplication app)
+        {
+            await using var scope = app.Services.CreateAsyncScope();
+            var dataInitializer = scope.ServiceProvider.GetRequiredService<IDataInitializer>();
+            await dataInitializer.InitializeAsync();
 
             return app;
         }

@@ -1,6 +1,7 @@
 ﻿using HMS.Shared.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HMS.API.Controllers
 {
@@ -8,6 +9,7 @@ namespace HMS.API.Controllers
     [ApiController]
     public class ApiBaseController : ControllerBase
     {
+        protected string GetUserEmailFromToken() => User.FindFirstValue(ClaimTypes.Email)!;
         protected ActionResult HandelResponse<T>(GenericResponse<T> response)
         {
             if (response is null)

@@ -2,6 +2,7 @@
 using HMS.Core.Entiites;
 using HMS.Infrastructure.Data.DbContexts;
 using HMS.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace HMS.Infrastructure.UnirOfWork
             return newRepo;
         }
 
-        public async Task<int> SaveChangesAsync() 
+        public async Task<int> SaveChangesAsync()
             => await _dbContext.SaveChangesAsync();
     }
 }
