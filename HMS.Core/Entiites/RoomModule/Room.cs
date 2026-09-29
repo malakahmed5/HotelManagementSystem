@@ -2,6 +2,7 @@
 using HMS.Core.Entiites.RoomModuleEntities.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,6 +12,8 @@ namespace HMS.Core.Entiites.RoomModuleEntities
 {
     public class Room : BaseEntity<int>
     {
+        [Timestamp]
+        public byte[] RowVersion { get; set; } 
         public RoomType RoomType { get; set; }
         public string Description { get; set; } = null!;
         public decimal PricePerNight { get; set; }

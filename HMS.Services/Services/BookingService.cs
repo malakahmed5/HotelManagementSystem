@@ -11,6 +11,7 @@ using HMS.Shared.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -109,10 +110,21 @@ namespace HMS.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed To Create Booking");
+                switch (ex)
+                {
+                    case DbUpdateConcurrencyException:
+                        // ده التعديل: لما حد تاني يحجز نفس الأوضة في نفس اللحظة (RowVersion اختلف)
+                        _logger.LogWarning(ex, $"Concurrency conflict while booking room {createBooking.RoomId}", createBooking?.RoomId);
+                        genericResponse.StatusCode = StatusCodes.Status409Conflict;
+                        genericResponse.Message = "This Room Was Just Booked By Someone Else, Please Try Again";
+                        break;
 
-                genericResponse.StatusCode = StatusCodes.Status500InternalServerError;
-                genericResponse.Message = "Faild To Create Booking On This Room";
+                    default:
+                        _logger.LogError(ex, "Failed To Create Booking");
+                        genericResponse.StatusCode = StatusCodes.Status500InternalServerError;
+                        genericResponse.Message = "Faild To Create Booking On This Room";
+                        break;
+                }
                 return genericResponse;
             }
         }
