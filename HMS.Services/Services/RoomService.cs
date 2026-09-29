@@ -225,15 +225,20 @@ namespace HMS.Services.Services
             try
             {
                 var roomRepo = _unitOfWork.GetRepository<int, Room>();
-
-                //Not Completed Logic [Rooms Without Future Booking]
-                var room = await roomRepo.GetByIdAsync(id,x => x.Where(r => r.RoomStatus != RoomStatus.NonExist));
+                var room = await roomRepo.GetByIdAsync(id,x => x.Where(r => r.RoomStatus != RoomStatus.NonExist),r => r.Bookings);
 
                 if (room is null)
                 {
                     genericResponse.StatusCode = StatusCodes.Status404NotFound;
                     genericResponse.Message = $"Room With This Id = {id} Not Found To Delete";
                     genericResponse.Data = false;
+                    return genericResponse;
+                }
+                var isRoomHaveFutureBookings = room.Bookings.Any(b => b.CheckInDate >= DateTime.Now || b.CheckOutDate >= DateTime.Now);
+                if (isRoomHaveFutureBookings)
+                {
+                    genericResponse.StatusCode = StatusCodes.Status400BadRequest;
+                    genericResponse.Message = "Can't Delete Room Because It Has Future Bookings";
                     return genericResponse;
                 }
 

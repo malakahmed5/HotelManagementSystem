@@ -4,6 +4,7 @@ using HMS.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMS.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260920205926_BookingModuleEntitiesAndConfigurations")]
+    partial class BookingModuleEntitiesAndConfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -372,28 +375,11 @@ namespace HMS.Infrastructure.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HMS.Core.Entiites.AuthModule.Admin", b =>
-                {
-                    b.HasBaseType("HMS.Core.Entiites.AuthModule.HotelUser");
-
-                    b.HasDiscriminator().HasValue("Admin");
-                });
-
             modelBuilder.Entity("HMS.Core.Entiites.AuthModule.Guest", b =>
                 {
                     b.HasBaseType("HMS.Core.Entiites.AuthModule.HotelUser");
 
                     b.HasDiscriminator().HasValue("Guest");
-                });
-
-            modelBuilder.Entity("HMS.Core.Entiites.AuthModule.Staff", b =>
-                {
-                    b.HasBaseType("HMS.Core.Entiites.AuthModule.HotelUser");
-
-                    b.Property<int>("Specialities")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Staff");
                 });
 
             modelBuilder.Entity("HMS.Core.Entiites.BookingModule.Booking", b =>

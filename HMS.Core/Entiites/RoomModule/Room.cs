@@ -1,4 +1,5 @@
-﻿using HMS.Core.Entiites.RoomModuleEntities.Enums;
+﻿using HMS.Core.Entiites.BookingModule;
+using HMS.Core.Entiites.RoomModuleEntities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace HMS.Core.Entiites.RoomModuleEntities
         public string Description { get; set; } = null!;
         public decimal PricePerNight { get; set; }
         public string Amenities { get; set; } = null!;
-        public ICollection<RoomImage> RoomImages { get; set; } = [];
         public RoomStatus RoomStatus { get; set; } = RoomStatus.Available;
+        public ICollection<RoomImage> RoomImages { get; set; } = [];
+        public ICollection<Booking> Bookings { get; set; } = [];
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HMS.Core.Entiites.AuthModule;
+using HMS.Core.Entiites.BookingModule;
 using HMS.Core.Entiites.RoomModuleEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -27,12 +28,19 @@ namespace HMS.Infrastructure.Data.DbContexts
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<HotelUser>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<HotelUser>("HotelUser")
+                .HasValue<Admin>("Admin")
+                .HasValue<Staff>("Staff")
+                .HasValue<Guest>("Guest");
+                        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         #region DbSets Properties
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         #endregion
 

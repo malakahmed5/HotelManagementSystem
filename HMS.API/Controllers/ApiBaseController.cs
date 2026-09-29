@@ -9,6 +9,7 @@ namespace HMS.API.Controllers
     [ApiController]
     public class ApiBaseController : ControllerBase
     {
+        protected string GetUserIdFromToken() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         protected string GetUserEmailFromToken() => User.FindFirstValue(ClaimTypes.Email)!;
         protected ActionResult HandelResponse<T>(GenericResponse<T> response)
         {

@@ -11,6 +11,7 @@ using HMS.Services.Services.AutoMapper;
 using HMS.Services.Services.AutoMapper.RoomModule;
 using HMS.Services.Services.Helpers;
 using HMS.Shared.DTOs.MessagesDTOs;
+using HMS.Shared.DTOs.PaymentDTOs.PaymobDTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -74,6 +75,14 @@ namespace HMS.API
             builder.Services.Configure<EmailSettings>(
                 builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
+
+            builder.Services.Configure<PaymobSettings>(
+                builder.Configuration.GetSection("PaymobSettings"));
+
+            builder.Services.AddHttpClient<IPaymentServiceGateway, PaymobPaymentGateway>();
+            builder.Services.AddScoped<IPaymentServiceGateway, PaymobPaymentGateway>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
             #endregion
 
             var app = builder.Build();

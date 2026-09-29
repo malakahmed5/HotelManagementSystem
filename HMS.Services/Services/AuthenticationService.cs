@@ -58,7 +58,7 @@ namespace HMS.Services.Services
                 return genericResponse;
             }
 
-            var newUser = new HotelUser()
+            var newUser = new Guest()
             {
                 FullName = registerDTO.FullName,
                 UserName = registerDTO.Email.Split('@')[0],
