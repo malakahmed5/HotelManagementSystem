@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36804.6 d17.14
+VisualStudioVersion = 17.14.36804.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS.API", "HMS.API\HMS.API.csproj", "{EA199767-9CA3-4FE7-A1A2-BB800BD99DCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS.Core", "HMS.Core\HMS.Core.csproj", "{F28D47F0-0A4E-43AF-87CF-942915D713BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS.Services", "HMS.Services\HMS.Services.csproj", "{B18BC325-674B-4605-B625-B3B6E6CCC6F8}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA199767-9CA3-4FE7-A1A2-BB800BD99DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA199767-9CA3-4FE7-A1A2-BB800BD99DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA199767-9CA3-4FE7-A1A2-BB800BD99DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA199767-9CA3-4FE7-A1A2-BB800BD99DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F28D47F0-0A4E-43AF-87CF-942915D713BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F28D47F0-0A4E-43AF-87CF-942915D713BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F28D47F0-0A4E-43AF-87CF-942915D713BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
